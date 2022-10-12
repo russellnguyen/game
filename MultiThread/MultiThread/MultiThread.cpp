@@ -1,31 +1,40 @@
-// MultiThread.cpp : This file contains the 'main' function. Program execution begins and ends there.
+﻿// MultiThread.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <iostream>
 #include <thread>
+#include <string>
 
 using namespace std;
 
-void DisplayFunction1(char symbol)
+// Công việc thứ nhất cần làm
+void Task1(string Task1Description)
 {
-    for (int i = 0; i < 100; i++) {
-        cout << symbol;
+    cout << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << Task1Description << ": " << i << endl;
     }
 }
 
-void DisplayFunction2()
+// Công việc thứ hai cần làm
+void Task2(string Task2Description)
 {
-    for (int i = 0; i < 100; i++) {
-        cout << "-";
-    }
+    cout << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << Task2Description << ": " << i << endl;
+    } 
 }
 
 int main()
 {
-    std::thread worker1(DisplayFunction1, 'O');
-    std::thread worker2(DisplayFunction2);
+    // Tạo 2 thread để thực thi 2 công việc
+    thread worker1(Task1, "Floor cleaning");
+    thread worker2(Task2, "Cooking");
     
-    system("pause>nul");
+    // Cần kết thúc 2 thread trên trước khi main thread kết thúc
+    worker1.join();
+    worker2.join();
 
-    //return 0;
+    return 0;
 }
+
